@@ -1,0 +1,95 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at top left, #1f2937, #111827);
+    color: #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    user-select: none;
+}
+
+h1,
+h2 {
+    font-family: 'Poppins', sans-serif;
+}
+
+.cell {
+    background-color: #2d3748;
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Standard */
+}
+
+.cell:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.cell::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 75%;
+    height: 75%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.player-piece-1::after {
+    background: #3b82f6;
+}
+
+.player-piece-2::after {
+    background: #facc15;
+}
+
+.winning-piece {
+    animation: bounce-in 1s ease-in-out infinite alternate;
+    box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.8), 0 0 10px 2px rgba(255, 255, 255, 0.5) !important;
+}
+
+@keyframes bounce-in {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.1);
+    }
+}
+
+#popup,
+#confirm-popup {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.menu-panel {
+    min-height: 100vh;
+}
+
+.close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: #d1d5db;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-button:hover {
+    color: #f3f4f6;
+}
