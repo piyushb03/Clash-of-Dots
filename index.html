@@ -12,27 +12,18 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-
 <body>
-
-    <header class="mb-10 w-full max-w-6xl mx-auto flex items-center justify-center relative md:flex-row">
+    <header class="w-full px-4 pt-4 mb-4 md:mb-10 max-w-6xl mx-auto flex items-center justify-center relative md:flex-row md:space-x-4">
         <div class="flex items-center space-x-4">
-            <button id="menu-toggle" class="p-2 z-50 bg-gray-700 rounded-md md:hidden">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
-                    </path>
-                </svg>
-            </button>
-            <img src="logo2.jpg" alt="Clash of Dots Logo" class="h-16 w-16 drop-shadow-lg rounded-xl">
+            <img src="logo2.jpg" alt="Clash of Dots Logo" class="h-12 w-12 sm:h-16 sm:w-16 drop-shadow-lg rounded-xl">
             <div class="flex flex-col text-left">
-                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-blue-400">Clash of Dots</h1>
-                <p class="text-sm sm:text-base italic text-gray-400">Outsmart the AI. Think ahead. Connect to win.</p>
+                <h1 class="text-2xl sm:text-3xl lg:text-5xl font-bold text-blue-400 header-glow">Clash of Dots</h1>
+                <p class="hidden sm:block text-xs sm:text-base italic text-gray-400">Outsmart the AI. Think ahead. Connect to win.</p>
             </div>
         </div>
     </header>
 
-    <div class="max-w-6xl w-full bg-gray-800 rounded-2xl shadow-2xl overflow-hidden md:grid md:grid-cols-2">
+    <div class="main-container max-w-6xl w-full bg-gray-800 rounded-2xl shadow-2xl overflow-hidden md:grid md:grid-cols-2">
 
         <div id="info-panel" class="hidden md:block bg-gray-900 p-8 flex flex-col justify-between">
             <div>
@@ -48,7 +39,7 @@
 
                 <h2 class="text-xl font-semibold mt-8 mb-3 text-green-400">Game Rules</h2>
                 <ol class="list-decimal pl-6 space-y-2 text-gray-300 text-justify">
-                    <li>Players drop discs into a 7×6 grid, one turn at a time.</li>
+                    <li>Players drop discs into a 6×6 grid, one turn at a time.</li>
                     <li>Objective: connect <span class="font-semibold text-white">four discs</span> horizontally,
                         vertically, or diagonally.</li>
                     <li>Game ends with a win or if the board is completely filled (draw).</li>
@@ -74,93 +65,60 @@
             </div>
         </div>
 
-        <div class="p-8 flex flex-col items-center bg-gray-800">
+        <div class="game-area p-4 sm:p-8 flex flex-col items-center bg-gray-800">
             <div id="game-board"
-                class="grid grid-cols-7 grid-rows-6 gap-2 bg-gray-700 rounded-xl p-4 shadow-inner aspect-[7/6] w-full max-w-md">
+                class="grid grid-cols-6 grid-rows-6 gap-2 bg-gray-700 rounded-xl p-4 shadow-inner aspect-square w-full max-w-sm">
             </div>
 
-            <div class="bg-gray-700 mt-6 py-2 px-4 rounded-lg w-full text-center font-semibold" id="message">
-                Your turn 🔵
+            <div class="game-info-panel bg-gray-700 mt-4 py-2 px-4 rounded-lg text-center font-semibold text-sm sm:text-base w-full max-w-sm">
+                <span id="message">Your turn 🔵</span>
             </div>
 
             <button id="start-button"
-                class="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg transition">
+                class="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg transition text-sm sm:text-base">
                 Start New Game
             </button>
         </div>
     </div>
-
-    <div id="mobile-menu"
-        class="fixed top-0 left-0 w-64 h-full bg-gray-900 z-40 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden overflow-y-auto">
-        <div id="main-menu-pane" class="p-8 menu-panel pt-16 flex flex-col items-center">
-            <h2 class="text-xl font-semibold mb-6 text-blue-400">Menu</h2>
-            <button id="about-btn"
-                class="block w-full text-left py-2 px-4 mb-4 rounded-md bg-gray-700 hover:bg-gray-600 transition">
-                About the Project
-            </button>
-            <button id="rules-btn"
-                class="block w-full text-left py-2 px-4 rounded-md bg-gray-700 hover:bg-gray-600 transition">
-                Game Rules
-            </button>
-            <h2 class="text-xl font-semibold mt-8 mb-3 text-cyan-400">Your Stats</h2>
-            <div class="bg-gray-800 rounded-lg p-4 shadow-lg flex justify-around text-center mt-6 w-full">
-                <div>
-                    <p class="text-gray-400 text-sm">Games Played</p>
-                    <p id="mobile-total-games-count" class="text-xl font-bold text-white">0</p>
-                </div>
-                <div class="h-10 w-px bg-gray-600"></div>
-                <div>
-                    <p class="text-gray-400 text-sm">Games Won</p>
-                    <p id="mobile-games-won-count" class="text-xl font-bold text-green-400">0</p>
-                </div>
-                <div class="h-10 w-px bg-gray-600"></div>
-                <div>
-                    <p class="text-gray-400 text-sm">Games Drawn</p>
-                    <p id="mobile-games-drawn-count" class="text-xl font-bold text-yellow-400">0</p>
-                </div>
-            </div>
-        </div>
-
-        <div id="about-pane" class="p-8 menu-panel hidden">
-            <button id="about-back-btn" class="mb-4 text-gray-400 hover:text-white transition flex items-center">
-                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd"
-                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                        clip-rule="evenodd" />
+    
+    <div id="mobile-nav" class="fixed bottom-0 left-0 w-full bg-gray-900 py-3 md:hidden">
+        <div class="flex justify-around items-center text-center">
+            <button id="mobile-about-btn" class="flex flex-col items-center text-gray-400 hover:text-white transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                Back
+                <span class="text-xs">About</span>
             </button>
-            <h2 class="text-xl font-semibold mb-3 text-yellow-400">About the Project</h2>
-            <ul class="list-disc pl-6 space-y-2 text-gray-300 text-justify">
-                <li>Classic Connect Four game reimagined with AI.</li>
-                <li>AI uses <span class="text-yellow-300 font-semibold">Minimax + Alpha-Beta Pruning</span> for decision
-                    making.</li>
-                <li>Custom <span class="text-yellow-300 font-semibold">heuristic evaluation</span> for smart strategies.
-                </li>
-                <li>Demonstrates advanced algorithmic design & problem-solving.</li>
-            </ul>
-        </div>
-
-        <div id="rules-pane" class="p-8 menu-panel hidden">
-            <button id="rules-back-btn" class="mb-4 text-gray-400 hover:text-white transition flex items-center">
-                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd"
-                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                        clip-rule="evenodd" />
+            <button id="mobile-rules-btn" class="flex flex-col items-center text-gray-400 hover:text-white transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M17 16h.01" />
                 </svg>
-                Back
+                <span class="text-xs">Rules</span>
             </button>
-            <h2 class="text-xl font-semibold mt-8 mb-3 text-green-400">Game Rules</h2>
-            <ol class="list-decimal pl-6 space-y-2 text-gray-300 text-justify">
-                <li>Players drop discs into a 7×6 grid, one turn at a time.</li>
-                <li>Objective: connect <span class="font-semibold text-white">four discs</span> horizontally,
-                    vertically, or diagonally.</li>
-                <li>Game ends with a win or if the board is completely filled (draw).</li>
-            </ol>
+            <button id="mobile-stats-btn" class="flex flex-col items-center text-gray-400 hover:text-white transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l-3 3m0 0l-3-3m3 3v14" />
+                </svg>
+                <span class="text-xs">Stats</span>
+            </button>
         </div>
     </div>
+
+    <div id="mobile-info-popup" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50">
+        <div class="bg-gray-900 text-center p-8 rounded-2xl shadow-2xl max-w-sm w-11/12 relative">
+            <button class="close-button" id="close-mobile-info-btn" aria-label="Close">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <div id="mobile-info-content"></div>
+        </div>
+    </div>
+
+
     <div id="turn-select-popup" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50">
-        <div class="bg-gray-900 text-center p-8 rounded-2xl shadow-2xl max-w-sm w-full relative">
+        <div class="bg-gray-900 text-center p-8 rounded-2xl shadow-2xl max-w-sm w-11/12 relative">
             <button class="close-button" id="close-turn-select-btn" aria-label="Close">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -180,7 +138,7 @@
     </div>
     <div id="popup" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50">
         <div
-            class="bg-gray-900 text-center p-8 rounded-2xl shadow-2xl max-w-sm w-full transform scale-95 transition-all relative">
+            class="bg-gray-900 text-center p-8 rounded-2xl shadow-2xl max-w-sm w-11/12 transform scale-95 transition-all relative">
             <button class="close-button" id="close-popup-btn" aria-label="Close">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -195,7 +153,7 @@
         </div>
     </div>
     <div id="confirm-popup" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50">
-        <div class="bg-gray-900 text-center p-8 rounded-2xl shadow-2xl max-w-sm w-full relative">
+        <div class="bg-gray-900 text-center p-8 rounded-2xl shadow-2xl max-w-sm w-11/12 relative">
             <button class="close-button" id="close-confirm-btn" aria-label="Close">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -218,30 +176,27 @@
     <audio id="winning-sound" src="winning.mp3"></audio>
     <audio id="losing-sound" src="losing.mp3"></audio>
     <audio id="draw-sound" src="draw.mp3"></audio>
-    <footer class="mt-12 border-t border-gray-700 pt-6 pb-4 text-center text-gray-400 w-full max-w-6xl mx-auto">
-        <div class="flex justify-center space-x-6 mb-2">
+    <footer class="mt-8 md:mt-12 border-t border-gray-700 pt-4 pb-2 text-center text-gray-400 w-full px-4 max-w-6xl mx-auto flex flex-col items-center">
+        <div class="flex flex-wrap justify-center space-x-4 sm:space-x-6 mb-2">
             <a href="https://linkedin.com/in/piyush-baghel" target="_blank"
                 class="transition transform hover:scale-110 hover:text-blue-400 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
                     <path
                         d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.769s.784-1.769 1.75-1.769 1.75.79 1.75 1.769-.783 1.769-1.75 1.769zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                 </svg>
             </a>
             <a href="https://github.com/piyushb03" target="_blank"
                 class="transition transform hover:scale-110 hover:text-gray-200 hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
                     <path
                         d="M12 .5C5.73.5 0 6.23 0 13.52c0 5.62 3.63 10.37 8.68 12.06.63.12.87-.27.87-.6v-2.09c-3.53.77-4.28-1.7-4.28-1.7-.58-1.46-1.43-1.85-1.43-1.85-1.17-.8.09-.78.09-.78 1.29.09 1.97 1.34 1.97 1.34 1.15 1.97 3.01 1.4 3.75 1.07.12-.84.45-1.4.82-1.73-2.85-.32-5.83-1.43-5.83-6.32 0-1.4.5-2.54 1.34-3.44-.14-.32-.58-1.63.13-3.39 0 0 1.08-.34 3.52 1.31 1.03-.28 2.13-.42 3.23-.42s2.2.14 3.23.42c2.44-1.65 3.52-1.31 3.52-1.31.71 1.76.27 3.07.13 3.39.84.9 1.34 2.04 1.34 3.44 0 4.9-2.98 6.01-5.83 6.32.46.4.87 1.17.87 2.36v3.52c0 .33.24.72.87.6C20.37 23.89 24 19.14 24 13.52 24 6.23 18.27.5 12 .5z" />
                 </svg>
             </a>
-
-
-            <p class="text-sm tracking-wide">
-                &copy; 2025 Clash of Dots by Piyush Baghel.
-            </p>
-        </footer>
-        <script src="script.js"></script>
-
+        </div>
+        <p class="text-xs sm:text-sm tracking-wide">
+            &copy; 2025 Clash of Dots by Piyush Baghel.
+        </p>
+    </footer>
+    <script src="script.js"></script>
 </body>
-
 </html>

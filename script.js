@@ -1,5 +1,5 @@
 const ROWS = 6,
-    COLS = 7;
+    COLS = 6;
 const DEPTH = 3;
 let board = Array.from({
     length: ROWS
@@ -29,17 +29,20 @@ const closeConfirmBtn = document.getElementById('close-confirm-btn');
 const totalGamesEl = document.getElementById('total-games-count');
 const gamesWonEl = document.getElementById('games-won-count');
 const gamesDrawnEl = document.getElementById('games-drawn-count');
-const mobileTotalGamesEl = document.getElementById('mobile-total-games-count');
-const mobileGamesWonEl = document.getElementById('mobile-games-won-count');
-const mobileGamesDrawnEl = document.getElementById('mobile-games-drawn-count');
+
+const mobileAboutBtn = document.getElementById('mobile-about-btn');
+const mobileRulesBtn = document.getElementById('mobile-rules-btn');
+const mobileStatsBtn = document.getElementById('mobile-stats-btn');
+const mobileInfoPopup = document.getElementById('mobile-info-popup');
+const mobileInfoContent = document.getElementById('mobile-info-content');
+const closeMobileInfoBtn = document.getElementById('close-mobile-info-btn');
+
 
 // Audio elements
 const turnSound = document.getElementById('turn-sound');
 const winningSound = document.getElementById('winning-sound');
 const losingSound = document.getElementById('losing-sound');
 const drawSound = document.getElementById('draw-sound');
-const menuToggleBtn = document.getElementById('menu-toggle');
-const mobileMenu = document.getElementById('mobile-menu');
 
 
 // --- Local Storage Functions ---
@@ -66,10 +69,6 @@ function updateStatsDisplay() {
     totalGamesEl.textContent = gameStats.totalGames;
     gamesWonEl.textContent = gameStats.gamesWon;
     gamesDrawnEl.textContent = gameStats.gamesDrawn;
-
-    mobileTotalGamesEl.textContent = gameStats.totalGames;
-    mobileGamesWonEl.textContent = gameStats.gamesWon;
-    mobileGamesDrawnEl.textContent = gameStats.gamesDrawn;
 }
 
 function incrementGamesWon() {
@@ -359,6 +358,8 @@ function hideAllPopups() {
     confirmPopup.classList.add('hidden');
     popup.classList.remove('flex');
     popup.classList.add('hidden');
+    mobileInfoPopup.classList.remove('flex');
+    mobileInfoPopup.classList.add('hidden');
 }
 
 function showStartOptions() {
@@ -412,48 +413,6 @@ function resetGame() {
     showTurnSelectPopup();
 }
 
-function loadStats() {
-    const storedStats = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (storedStats) {
-        gameStats = JSON.parse(storedStats);
-    }
-    updateStatsDisplay();
-}
-
-function saveStats() {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(gameStats));
-}
-
-function updateStatsDisplay() {
-    totalGamesEl.textContent = gameStats.totalGames;
-    gamesWonEl.textContent = gameStats.gamesWon;
-    gamesDrawnEl.textContent = gameStats.gamesDrawn;
-
-    mobileTotalGamesEl.textContent = gameStats.totalGames;
-    mobileGamesWonEl.textContent = gameStats.gamesWon;
-    mobileGamesDrawnEl.textContent = gameStats.gamesDrawn;
-}
-
-function incrementGamesWon() {
-    gameStats.totalGames++;
-    gameStats.gamesWon++;
-    saveStats();
-    updateStatsDisplay();
-}
-
-function incrementGamesDrawn() {
-    gameStats.totalGames++;
-    gameStats.gamesDrawn++;
-    saveStats();
-    updateStatsDisplay();
-}
-
-function incrementGamesLost() {
-    gameStats.totalGames++;
-    saveStats();
-    updateStatsDisplay();
-}
-
 // Event listeners
 startButton.addEventListener('click', showStartOptions);
 popupButton.addEventListener('click', showStartOptions);
@@ -469,47 +428,63 @@ closeTurnSelectBtn.addEventListener('click', hideAllPopups);
 closePopupBtn.addEventListener('click', hideAllPopups);
 closeConfirmBtn.addEventListener('click', hideAllPopups);
 
+// Mobile navbar button event listeners
+mobileAboutBtn.addEventListener('click', () => {
+    mobileInfoContent.innerHTML = `
+        <h2 class="text-xl font-semibold mb-3 text-yellow-400">About the Project</h2>
+        <ul class="list-disc pl-6 space-y-2 text-gray-300 text-justify">
+            <li>Classic Connect Four game reimagined with AI.</li>
+            <li>AI uses <span class="text-yellow-300 font-semibold">Minimax + Alpha-Beta Pruning</span> for decision
+                making.</li>
+            <li>Custom <span class="text-yellow-300 font-semibold">heuristic evaluation</span> for smart strategies.
+            </li>
+            <li>Demonstrates advanced algorithmic design & problem-solving.</li>
+        </ul>
+    `;
+    mobileInfoPopup.classList.remove('hidden');
+    mobileInfoPopup.classList.add('flex');
+});
+
+mobileRulesBtn.addEventListener('click', () => {
+    mobileInfoContent.innerHTML = `
+        <h2 class="text-xl font-semibold mt-8 mb-3 text-green-400">Game Rules</h2>
+        <ol class="list-decimal pl-6 space-y-2 text-gray-300 text-justify">
+            <li>Players drop discs into a 6×6 grid, one turn at a time.</li>
+            <li>Objective: connect <span class="font-semibold text-white">four discs</span> horizontally,
+                vertically, or diagonally.</li>
+            <li>Game ends with a win or if the board is completely filled (draw).</li>
+        </ol>
+    `;
+    mobileInfoPopup.classList.remove('hidden');
+    mobileInfoPopup.classList.add('flex');
+});
+
+mobileStatsBtn.addEventListener('click', () => {
+    mobileInfoContent.innerHTML = `
+        <h2 class="text-xl font-semibold mb-3 text-cyan-400">Your Stats</h2>
+        <div class="bg-gray-800 rounded-lg p-4 shadow-lg flex justify-around text-center mb-6">
+            <div>
+                <p class="text-gray-400 text-sm">Games Played</p>
+                <p class="text-xl font-bold text-white">${gameStats.totalGames}</p>
+            </div>
+            <div class="h-10 w-px bg-gray-600"></div>
+            <div>
+                <p class="text-gray-400 text-sm">Games Won</p>
+                <p class="text-xl font-bold text-green-400">${gameStats.gamesWon}</p>
+            </div>
+            <div class="h-10 w-px bg-gray-600"></div>
+            <div>
+                <p class="text-gray-400 text-sm">Games Drawn</p>
+                <p class="text-xl font-bold text-yellow-400">${gameStats.gamesDrawn}</p>
+            </div>
+        </div>
+    `;
+    mobileInfoPopup.classList.remove('hidden');
+    mobileInfoPopup.classList.add('flex');
+});
+
+closeMobileInfoBtn.addEventListener('click', hideAllPopups);
+
+
 renderBoard();
-
-// New menu buttons
-const aboutBtn = document.getElementById('about-btn');
-const rulesBtn = document.getElementById('rules-btn');
-const aboutPane = document.getElementById('about-pane');
-const rulesPane = document.getElementById('rules-pane');
-const aboutBackBtn = document.getElementById('about-back-btn');
-const rulesBackBtn = document.getElementById('rules-back-btn');
-
-// Fix: Reset menu state to main pane when opening/toggling
-menuToggleBtn.addEventListener('click', () => {
-    mobileMenu.classList.toggle('-translate-x-full');
-    document.getElementById('main-menu-pane').classList.remove('hidden');
-    aboutPane.classList.add('hidden');
-    rulesPane.classList.add('hidden');
-});
-
-// Show About pane
-aboutBtn.addEventListener('click', () => {
-    document.getElementById('main-menu-pane').classList.add('hidden');
-    aboutPane.classList.remove('hidden');
-});
-
-// Show Rules pane
-rulesBtn.addEventListener('click', () => {
-    document.getElementById('main-menu-pane').classList.add('hidden');
-    rulesPane.classList.remove('hidden');
-});
-
-// Go back from About pane
-aboutBackBtn.addEventListener('click', () => {
-    aboutPane.classList.add('hidden');
-    document.getElementById('main-menu-pane').classList.remove('hidden');
-});
-
-// Go back from Rules pane
-rulesBackBtn.addEventListener('click', () => {
-    rulesPane.classList.add('hidden');
-    document.getElementById('main-menu-pane').classList.remove('hidden');
-});
-
-// Initial load of stats from local storage on page load
 loadStats();
