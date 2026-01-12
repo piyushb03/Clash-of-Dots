@@ -1,29 +1,115 @@
-```markdown
-# Clash of Dots: Connect Four with AI
+# Clash of Dots — Connect Four with AI
 
-## Description
+A classic Connect Four game with an intelligent AI opponent powered by Minimax algorithm.
 
-"Clash of Dots" is a classic Connect Four game implemented as a self-contained web application. It features an AI opponent powered by the Minimax algorithm with Alpha-Beta pruning. The game tracks local statistics without needing a backend server.
+<img width="1490" height="870" alt="image" src="https://github.com/user-attachments/assets/c4e596f8-b135-4140-ba45-2cddb4c799d5" />
 
-## Features
 
--   **Classic Connect Four Gameplay**: Play the traditional game on a 7x6 grid, aiming to connect four discs in a row horizontally, vertically, or diagonally.
--   **Intelligent AI Opponent**: The AI uses the Minimax algorithm with Alpha-Beta pruning to make strategic decisions.
--   **Persistent Local Statistics**: Game statistics (games played, won, and drawn) are stored in the browser's local storage.
--   **Responsive Design**: The game is designed to be responsive and work well on both desktop and mobile devices.
 
-## How to Play
+## 📋 Description
 
-1.  Open the `index.html` file in your web browser.
-2.  Choose whether you or the AI will go first.
-3.  Click on a column to drop your disc.
-4.  The first player to connect four discs in a row wins.
+Clash of Dots is a web-based implementation of the classic Connect Four game featuring an AI opponent that uses the Minimax algorithm with Alpha-Beta pruning for strategic gameplay. Play against the computer and track your performance with persistent local statistics.
 
-## Project Structure
+## ✨ Features
 
-The project is structured as follows:
+- **Classic Connect Four Gameplay** — Play on a traditional 7x6 grid
+- **Intelligent AI Opponent** — Minimax algorithm with Alpha-Beta pruning
+- **Persistent Statistics** — Track games played, won, and drawn using browser local storage
+- **Responsive Design** — Works seamlessly on desktop and mobile devices
+- **No Backend Required** — Fully self-contained web application
 
--   `index.html`: The main HTML file for the game's structure and UI.
--   `style.css`: The CSS file for styling the game's appearance.
--   `script.js`: The JavaScript file containing the game logic and AI.
+## 🎮 How to Play
+
+1. Open `index.html` in your web browser
+2. Choose who goes first (You or AI)
+3. Click on any column to drop your disc
+4. Connect four discs horizontally, vertically, or diagonally to win
+5. First player to connect four wins!
+
+## 📸 Demo
+
+https://github.com/user-attachments/assets/563b971b-64e0-4c19-9f84-af0dd5ecf4cb
+
+
+## 📁 Project Structure
+
 ```
+Clash-of-Dots/
+├── index.html      # Main HTML structure
+├── style.css       # Game styling
+└── script.js       # Game logic and AI
+```
+
+## 🚀 Installation
+
+### Quick Start
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/yourusername/clash-of-dots.git
+cd clash-of-dots
+```
+
+2. **Open the game**
+```bash
+# Simply open index.html in your browser
+# Or use a local server:
+python -m http.server 8000
+# Visit http://localhost:8000
+```
+
+That's it! No dependencies or installation required.
+
+## 🛠️ Tech Stack
+
+- **HTML5** — Structure and layout
+- **CSS3** — Styling and animations
+- **JavaScript (ES6+)** — Game logic and AI
+- **Local Storage API** — Persistent statistics
+
+## 🤖 AI Algorithm
+
+The AI opponent uses:
+- **Minimax Algorithm** — Evaluates all possible moves
+- **Alpha-Beta Pruning** — Optimizes decision-making speed
+- **Depth-Limited Search** — Balances performance and intelligence
+
+## 📊 Game Statistics
+
+Stats tracked locally in your browser:
+- Total games played
+- Games won
+- Games lost
+- Games drawn
+- Win percentage
+  
+
+
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+
+## 👤 Author
+
+**Your Name**
+- GitHub: [@yourusername](https://github.com/yourusername)
+- Project Link: [https://github.com/yourusername/clash-of-dots](https://github.com/yourusername/clash-of-dots)
+
+
+---
+
+<div align="center">
+
+**⭐ If you enjoyed this game, please give it a star! ⭐**
+
+Made with ❤️ for game lovers
+
+</div>
