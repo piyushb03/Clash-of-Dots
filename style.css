@@ -315,7 +315,7 @@ body {
 .game-layout-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.25rem;
+    gap: clamp(0.4rem, 1.4vh, 0.9rem);
     align-items: center;
     justify-content: center;
     max-width: 850px;
@@ -342,23 +342,41 @@ body {
 
 /* GAME BOARD STYLES - Authentic Arcade Chassis */
 .game-board-wrapper {
+    --board-cols: 7;
+    --board-rows: 6;
+    --gap-size: clamp(0.2rem, 1vw, 0.45rem);
+    --pad-size: clamp(0.45rem, 1.5vw, 0.85rem);
+    
+    /* Dynamically calculate maximum cell diameter that fits BOTH viewport width and height */
+    --avail-w: min(92vw, 480px);
+    --avail-h: min(52vh, 440px);
+    --cell-w: calc((var(--avail-w) - (var(--pad-size) * 2) - ((var(--board-cols) - 1) * var(--gap-size))) / var(--board-cols));
+    --cell-h: calc((var(--avail-h) - (var(--pad-size) * 2) - ((var(--board-rows) - 1) * var(--gap-size))) / var(--board-rows));
+    --cell-size: clamp(26px, min(var(--cell-w), var(--cell-h)), 56px);
+
     background: radial-gradient(circle at 50% 15%, #1e293b 0%, #0f172a 70%, #080d1a 100%);
     border: 4px solid #334155;
-    border-radius: 1.75rem;
-    padding: clamp(0.4rem, 2vw, 1rem);
-    box-shadow: 0 24px 48px -8px rgba(0, 0, 0, 0.85), inset 0 2px 4px rgba(255, 255, 255, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.05);
-    width: 100%;
-    max-width: min(94vw, 440px);
-    max-height: min(48vh, 440px);
-    aspect-ratio: var(--board-aspect, 1 / 1);
+    border-radius: 1.5rem;
+    padding: var(--pad-size);
+    box-shadow: 0 20px 48px -8px rgba(0, 0, 0, 0.85), inset 0 2px 4px rgba(255, 255, 255, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.05);
     margin: 0 auto;
+    width: fit-content;
+    height: fit-content;
+    max-width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    box-sizing: border-box;
 }
 
 /* Board Themes */
+.game-board-wrapper.board-carbon {
+    border-color: #3b82f6;
+    box-shadow: 0 0 25px rgba(59, 130, 246, 0.4), inset 0 0 15px rgba(59, 130, 246, 0.2);
+    background: radial-gradient(circle at 50% 15%, #172554 0%, #0f172a 65%, #020617 100%);
+}
+
 .game-board-wrapper.board-neon {
     border-color: #06b6d4;
     box-shadow: 0 0 25px rgba(6, 182, 212, 0.45), inset 0 0 15px rgba(6, 182, 212, 0.25);
@@ -385,11 +403,14 @@ body {
 
 #game-board {
     display: grid;
-    gap: clamp(0.2rem, 1vw, 0.5rem);
-    width: 100%;
-    height: 100%;
+    grid-template-columns: repeat(var(--board-cols, 7), var(--cell-size));
+    grid-template-rows: repeat(var(--board-rows, 6), var(--cell-size));
+    gap: var(--gap-size);
     justify-content: center;
     align-content: center;
+    width: fit-content;
+    height: fit-content;
+    box-sizing: border-box;
 }
 
 /* Board Cells - Realistic Recessed Drop Slots */
@@ -398,16 +419,17 @@ body {
     border-radius: 50%;
     position: relative;
     cursor: pointer;
-    aspect-ratio: 1 / 1;
-    width: 100%;
-    height: 100%;
+    width: var(--cell-size);
+    height: var(--cell-size);
     box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.95), inset 0 1px 2px rgba(0, 0, 0, 0.9), 0 1px 1px rgba(255, 255, 255, 0.08);
     transition: transform 0.12s ease, box-shadow 0.12s ease;
     touch-action: manipulation;
+    box-sizing: border-box;
+    flex-shrink: 0;
 }
 
 .cell:hover {
-    transform: scale(1.03);
+    transform: scale(1.04);
 }
 
 /* Hover preview disc */
@@ -1067,9 +1089,10 @@ body {
     }
 
     .game-board-wrapper {
-        max-width: 96vw;
-        max-height: 45vh;
-        padding: 0.35rem;
+        --avail-w: 96vw;
+        --avail-h: 46vh;
+        --gap-size: 0.2rem;
+        --pad-size: 0.35rem;
     }
 
     #game-board {
@@ -1109,9 +1132,10 @@ body {
     }
 
     .game-board-wrapper {
-        max-height: 56vh;
-        max-width: 44vw;
-        padding: 0.4rem;
+        --avail-w: 46vw;
+        --avail-h: calc(100vh - 90px);
+        --gap-size: 0.2rem;
+        --pad-size: 0.35rem;
     }
 
     .game-layout-grid {

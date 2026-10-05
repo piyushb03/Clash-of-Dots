@@ -419,13 +419,14 @@ class UIManager {
 
     initGameBoard(rows, cols) {
         this.engine = new window.GameEngine(rows, cols);
-        this.gameBoardEl.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-        this.gameBoardEl.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 
-        // Set dynamic responsive aspect ratio
+        // Set dynamic responsive grid properties
         this.boardContainer.style.setProperty('--board-cols', cols);
         this.boardContainer.style.setProperty('--board-rows', rows);
         this.boardContainer.style.setProperty('--board-aspect', `${cols} / ${rows}`);
+
+        this.gameBoardEl.style.gridTemplateColumns = `repeat(${cols}, var(--cell-size, 48px))`;
+        this.gameBoardEl.style.gridTemplateRows = `repeat(${rows}, var(--cell-size, 48px))`;
 
         // Apply equipped board theme
         const equippedBoard = window.stateManager.equipped.board || 'board-carbon';
