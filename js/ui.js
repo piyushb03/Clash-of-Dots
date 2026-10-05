@@ -94,6 +94,10 @@ class UIManager {
             window.audioEngine.playClick();
             this.startDailyChallenge();
         });
+        document.getElementById('btn-banner-daily')?.addEventListener('click', () => {
+            window.audioEngine.playClick();
+            this.startDailyChallenge();
+        });
 
         // HUD Controls
         document.getElementById('btn-hud-pause')?.addEventListener('click', () => {
@@ -355,6 +359,14 @@ class UIManager {
         this.engine.setBoardFromState(daily.puzzle.board);
         this.setupPlayerBadges('Operative', 'Daily Protocol', window.stateManager.profile.avatar, '📅');
         this.setPowerupAvailability(daily.puzzle.hasBomb ? ['bomb'] : daily.puzzle.hasLaser ? ['laser'] : []);
+
+        this.currentTurn = 1;
+        this.movesCount = 0;
+        this.isGameOver = false;
+        this.isAiThinking = false;
+        this.updateHUD();
+        this.resetTurnTimer();
+
         this.switchView('game');
         this.renderBoard();
         this.statusMsgEl.textContent = daily.description;
@@ -392,9 +404,16 @@ class UIManager {
         this.setupPlayerBadges('Operative', 'Tactical Board', window.stateManager.profile.avatar, '🧩');
         this.setPowerupAvailability(puzzle.hasBomb ? ['bomb'] : puzzle.hasLaser ? ['laser'] : []);
 
+        this.currentTurn = 1;
+        this.movesCount = 0;
+        this.isGameOver = false;
+        this.isAiThinking = false;
+        this.updateHUD();
+        this.resetTurnTimer();
+
         this.switchView('game');
         this.renderBoard();
-        this.statusMsgEl.textContent = puzzle.description;
+        this.statusMsgEl.textContent = `${puzzle.title}: ${puzzle.description}`;
         this.showToast(`${puzzle.title}: ${puzzle.difficulty}`, '🧠');
     }
 
@@ -590,13 +609,10 @@ class UIManager {
             this.handleGameWin(result.winLine, this.currentTurn);
         } else if (result.isDraw) {
             this.handleGameDraw();
+        } else if (this.gameMode === 'puzzle' || this.gameMode === 'daily') {
+            this.checkPuzzleProgress(col, result);
+            return;
         } else {
-            // Check puzzle move limit
-            if (this.gameMode === 'puzzle' || this.gameMode === 'daily') {
-                this.checkPuzzleProgress();
-                return;
-            }
-
             // Switch Turn
             this.currentTurn = this.currentTurn === 1 ? 2 : 1;
             this.updateHUD();
@@ -628,6 +644,8 @@ class UIManager {
             this.showToast(`Column ${col + 1} Frozen for next turn!`, '❄️');
         }
 
+        this.movesCount++;
+        this.updateHUD();
         window.stateManager.stats.powerupsUsed = (window.stateManager.stats.powerupsUsed || 0) + 1;
         this.selectedPowerup = null;
         document.querySelectorAll('.btn-powerup').forEach(b => {
@@ -636,6 +654,21 @@ class UIManager {
         });
 
         this.renderBoard();
+        if (this.gameMode === 'puzzle' || this.gameMode === 'daily') {
+            const puzzle = this.currentPuzzle;
+            const winLine = (result && result.winLine) || this.engine.checkWin(1);
+            const isSolution = (puzzle && puzzle.solutionMoves) ? puzzle.solutionMoves.includes(col) : false;
+            if (winLine || isSolution) {
+                this.handleGameWin(winLine || [[this.engine.rows - 1, col]], 1);
+                return;
+            } else {
+                window.audioEngine.playError();
+                this.showToast('Tactical objective missed! Try again.', '⚠️', 'warning');
+                setTimeout(() => this.restartCurrentGame(), 1200);
+                return;
+            }
+        }
+
         if (result && result.winLine) {
             this.handleGameWin(result.winLine, this.currentTurn);
         } else if (result && result.isDraw) {
@@ -688,16 +721,51 @@ class UIManager {
         }, 550);
     }
 
-    checkPuzzleProgress() {
-        const winLine = this.engine.checkWin(1);
-        if (winLine) {
-            this.handleGameWin(winLine, 1);
+    checkPuzzleProgress(col, result) {
+        const puzzle = this.currentPuzzle;
+        if (!puzzle) return;
+
+        const winLine = (result && result.winLine) || this.engine.checkWin(1);
+        const isSolution = (puzzle.solutionMoves || []).includes(col);
+
+        if (winLine || isSolution) {
+            if (winLine || this.movesCount >= puzzle.targetMoves) {
+                const line = winLine || [[result ? result.row : puzzle.rows - 1, col]];
+                this.handleGameWin(line, 1);
+                return;
+            } else {
+                // Multi-step puzzle: correct move 1! Counter with AI
+                this.currentTurn = 2;
+                this.updateHUD();
+                this.isAiThinking = true;
+                this.statusMsgEl.textContent = 'Correct move! AI countering... 🤖';
+                setTimeout(() => {
+                    if (this.isGameOver) return;
+                    const aiMove = window.connectAI.findBestMove(this.engine.board, 'normal', 2);
+                    this.isAiThinking = false;
+                    if (aiMove !== null) {
+                        const aiRes = this.engine.dropPiece(aiMove, 2);
+                        window.audioEngine.playDrop(2);
+                        this.renderBoard();
+                        if (aiRes.winLine) {
+                            this.handleGameWin(aiRes.winLine, 2);
+                            return;
+                        }
+                    }
+                    this.currentTurn = 1;
+                    this.updateHUD();
+                    this.statusMsgEl.textContent = 'Finish the sequence to claim victory!';
+                }, 550);
+                return;
+            }
         } else {
-            // Puzzle failed if no win achieved in target moves
-            window.audioEngine.playLose();
-            this.statusMsgEl.textContent = 'Target not achieved. Try again!';
+            window.audioEngine.playError();
+            this.statusMsgEl.textContent = 'Tactical objective missed! Resetting...';
+            this.showToast('Missed tactical target! Try again or use 💡 Hint.', '⚠️', 'warning');
             setTimeout(() => {
-                this.restartCurrentGame();
+                if (this.currentPuzzle && (this.gameMode === 'puzzle' || this.gameMode === 'daily')) {
+                    this.restartCurrentGame();
+                }
             }, 1200);
         }
     }
@@ -848,10 +916,26 @@ class UIManager {
 
     provideHint() {
         if (this.isGameOver || this.isAiThinking) return;
-        const bestCol = window.connectAI.getPlayerHint(this.engine.board);
+
+        let bestCol;
+        if (this.currentPuzzle && (this.gameMode === 'puzzle' || this.gameMode === 'daily')) {
+            bestCol = (this.currentPuzzle.solutionMoves && this.currentPuzzle.solutionMoves.length > 0)
+                ? this.currentPuzzle.solutionMoves[0]
+                : null;
+            if (this.currentPuzzle.hint) {
+                this.showToast(this.currentPuzzle.hint, '💡', 'info');
+            } else if (bestCol !== null) {
+                this.showToast(`Tactical Target: Column ${bestCol + 1}!`, '💡', 'info');
+            }
+        } else {
+            bestCol = window.connectAI.getPlayerHint(this.engine.board);
+            if (bestCol !== null && bestCol !== undefined) {
+                this.showToast(`Recommended Move: Column ${bestCol + 1}!`, '💡', 'info');
+            }
+        }
+
         if (bestCol !== null && bestCol !== undefined) {
             window.audioEngine.playCoin();
-            this.showToast(`Recommended Move: Column ${bestCol + 1}!`, '💡', 'info');
             const cells = this.gameBoardEl.querySelectorAll(`[data-col="${bestCol}"]`);
             cells.forEach(c => {
                 c.classList.add('hint-pulse');
@@ -977,8 +1061,7 @@ class UIManager {
         }).join('');
 
         container.querySelectorAll('.puzzle-card').forEach(card => {
-            card.querySelector('.btn-play-puzzle').addEventListener('click', (e) => {
-                e.stopPropagation();
+            card.addEventListener('click', () => {
                 const puzId = card.dataset.puzzleId;
                 const puzzle = window.challengeEngine.puzzles.find(p => p.id === puzId);
                 if (puzzle) {

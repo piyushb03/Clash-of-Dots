@@ -94,66 +94,151 @@ body {
     box-shadow: var(--shadow-elevated);
 }
 
-/* Header */
+/* Header - Commercial Game Bar */
 .top-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem 1.25rem;
-    margin-bottom: 1.25rem;
-    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 1.25rem;
+    background: linear-gradient(180deg, rgba(20, 28, 48, 0.92) 0%, rgba(11, 16, 28, 0.96) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    position: relative;
+    z-index: 100;
+    gap: 0.5rem;
 }
 
 .logo-container {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.6rem;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    flex-shrink: 0;
+    min-width: 0;
+    transition: transform 0.15s ease;
 }
 
-.logo-container:hover {
-    transform: scale(1.02);
+.logo-container:active {
+    transform: scale(0.97);
 }
 
 .logo-img {
-    width: 2.75rem;
-    height: 2.75rem;
+    width: clamp(2.2rem, 5vw, 2.75rem);
+    height: clamp(2.2rem, 5vw, 2.75rem);
     border-radius: 0.75rem;
-    box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
+    border: 2px solid rgba(56, 189, 248, 0.4);
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    flex-shrink: 0;
+    object-fit: cover;
+}
+
+.header-text-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    flex-shrink: 0;
 }
 
 .header-title {
     font-family: var(--font-heading);
-    font-size: 1.5rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #60a5fa, #38bdf8);
+    font-size: clamp(1rem, 3.6vw, 1.45rem);
+    font-weight: 900;
+    line-height: 1.1;
+    white-space: nowrap;
+    background: linear-gradient(180deg, #ffffff 0%, #93c5fd 60%, #38bdf8 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -0.02em;
+    text-shadow: 0 2px 10px rgba(56, 189, 248, 0.3);
 }
 
-/* Currencies & Profile Pills */
-.profile-pill {
+.header-subtitle {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #64748b;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* Header Action & Currency Toolbar */
+.header-toolbar {
     display: flex;
     align-items: center;
-    background: rgba(31, 41, 55, 0.7);
-    border: 1px solid var(--border-subtle);
-    border-radius: 2rem;
-    padding: 0.35rem 0.85rem;
-    gap: 0.5rem;
+    gap: clamp(0.3rem, 1.5vw, 0.6rem);
+    flex-shrink: 0;
 }
 
+/* Gaming Currency Badges */
 .currency-badge {
     display: flex;
     align-items: center;
     gap: 0.35rem;
-    font-weight: 700;
-    font-size: 0.875rem;
+    font-weight: 800;
+    font-size: clamp(0.72rem, 2.2vw, 0.85rem);
     padding: 0.3rem 0.65rem;
-    border-radius: 1rem;
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid var(--border-subtle);
+    border-radius: 9999px;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(2, 6, 23, 0.95) 100%);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(255, 255, 255, 0.08);
+    transition: transform 0.15s ease, border-color 0.2s ease;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.currency-badge:hover {
+    transform: translateY(-1px);
+}
+
+.currency-coins {
+    border: 1.5px solid rgba(245, 158, 11, 0.5);
+    color: #fbbf24;
+}
+
+.currency-coins:hover {
+    border-color: #f59e0b;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.currency-gems {
+    border: 1.5px solid rgba(6, 182, 212, 0.5);
+    color: #38bdf8;
+}
+
+.currency-gems:hover {
+    border-color: #06b6d4;
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Tactile Utility Header Buttons */
+.header-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(32px, 8vw, 38px);
+    height: clamp(32px, 8vw, 38px);
+    border-radius: 0.75rem;
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 3px 0 #020617, 0 4px 8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    font-size: clamp(0.85rem, 2.5vw, 1.05rem);
+    transition: all 0.12s ease;
+    flex-shrink: 0;
+    color: #e2e8f0;
+}
+
+.header-btn:hover {
+    background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+}
+
+.header-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #020617, 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* Main Content Views */
@@ -175,15 +260,16 @@ body {
 
 /* Mode Selection Cards (Main Menu) */
 .mode-card {
-    background: var(--bg-card);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border-subtle);
+    background: linear-gradient(145deg, rgba(24, 32, 54, 0.88) 0%, rgba(13, 19, 33, 0.95) 100%);
+    backdrop-filter: blur(14px);
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
     border-radius: 1.25rem;
-    padding: 1.5rem;
+    padding: 1.35rem;
     cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     overflow: hidden;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .mode-card::before {
@@ -193,26 +279,36 @@ body {
     left: 0;
     width: 100%;
     height: 4px;
-    background: linear-gradient(90deg, #3b82f6, #06b6d4);
-    opacity: 0;
-    transition: opacity 0.25s ease;
+    background: linear-gradient(90deg, #3b82f6, #06b6d4, #a855f7);
+    opacity: 0.6;
+    transition: opacity 0.2s ease, height 0.2s ease;
 }
 
 .mode-card:hover {
-    transform: translateY(-4px) scale(1.01);
-    border-color: var(--border-glow);
-    box-shadow: 0 15px 30px -10px rgba(59, 130, 246, 0.25);
-    background: var(--bg-card-hover);
+    transform: translateY(-4px) scale(1.015);
+    border-color: rgba(56, 189, 248, 0.5);
+    box-shadow: 0 16px 32px -8px rgba(56, 189, 248, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .mode-card:hover::before {
     opacity: 1;
+    height: 5px;
+}
+
+.mode-card:active {
+    transform: translateY(-1px) scale(0.99);
 }
 
 .mode-icon {
     font-size: 2.25rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.6rem;
     display: inline-block;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+    transition: transform 0.2s ease;
+}
+
+.mode-card:hover .mode-icon {
+    transform: scale(1.12) rotate(-3deg);
 }
 
 /* Game Board HUD & Layout */
@@ -244,13 +340,13 @@ body {
     background: rgba(59, 130, 246, 0.15);
 }
 
-/* GAME BOARD STYLES */
+/* GAME BOARD STYLES - Authentic Arcade Chassis */
 .game-board-wrapper {
-    background: linear-gradient(145deg, #1e293b, #0f172a);
-    border: 3px solid #334155;
-    border-radius: 1.5rem;
+    background: radial-gradient(circle at 50% 15%, #1e293b 0%, #0f172a 70%, #080d1a 100%);
+    border: 4px solid #334155;
+    border-radius: 1.75rem;
     padding: clamp(0.4rem, 2vw, 1rem);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), inset 0 2px 4px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 24px 48px -8px rgba(0, 0, 0, 0.85), inset 0 2px 4px rgba(255, 255, 255, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.05);
     width: 100%;
     max-width: min(94vw, 440px);
     max-height: min(48vh, 440px);
@@ -265,26 +361,26 @@ body {
 /* Board Themes */
 .game-board-wrapper.board-neon {
     border-color: #06b6d4;
-    box-shadow: 0 0 25px rgba(6, 182, 212, 0.4), inset 0 0 15px rgba(6, 182, 212, 0.2);
-    background: linear-gradient(145deg, #091e3a, #030712);
+    box-shadow: 0 0 25px rgba(6, 182, 212, 0.45), inset 0 0 15px rgba(6, 182, 212, 0.25);
+    background: radial-gradient(circle at 50% 15%, #0e2a4a 0%, #061528 70%, #020712 100%);
 }
 
 .game-board-wrapper.board-magma {
     border-color: #ef4444;
-    box-shadow: 0 0 25px rgba(239, 68, 68, 0.4), inset 0 0 15px rgba(239, 68, 68, 0.2);
-    background: linear-gradient(145deg, #2b0707, #0f0202);
+    box-shadow: 0 0 25px rgba(239, 68, 68, 0.45), inset 0 0 15px rgba(239, 68, 68, 0.25);
+    background: radial-gradient(circle at 50% 15%, #3d0d0d 0%, #1f0505 70%, #0a0101 100%);
 }
 
 .game-board-wrapper.board-frost {
     border-color: #38bdf8;
-    box-shadow: 0 0 25px rgba(56, 189, 248, 0.4), inset 0 0 15px rgba(56, 189, 248, 0.2);
-    background: linear-gradient(145deg, #082f49, #02131e);
+    box-shadow: 0 0 25px rgba(56, 189, 248, 0.45), inset 0 0 15px rgba(56, 189, 248, 0.25);
+    background: radial-gradient(circle at 50% 15%, #0c3c5d 0%, #062035 70%, #020d17 100%);
 }
 
 .game-board-wrapper.board-gold {
     border-color: #fbbf24;
-    box-shadow: 0 0 25px rgba(251, 191, 36, 0.4), inset 0 0 15px rgba(251, 191, 36, 0.2);
-    background: linear-gradient(145deg, #281a03, #0a0601);
+    box-shadow: 0 0 25px rgba(251, 191, 36, 0.45), inset 0 0 15px rgba(251, 191, 36, 0.25);
+    background: radial-gradient(circle at 50% 15%, #3a2707 0%, #1c1303 70%, #0a0701 100%);
 }
 
 #game-board {
@@ -296,22 +392,22 @@ body {
     align-content: center;
 }
 
-/* Board Cells */
+/* Board Cells - Realistic Recessed Drop Slots */
 .cell {
-    background-color: #0b1120;
+    background: radial-gradient(circle at 50% 50%, #060911 0%, #0b1120 70%, #111a2e 100%);
     border-radius: 50%;
     position: relative;
     cursor: pointer;
     aspect-ratio: 1 / 1;
     width: 100%;
     height: 100%;
-    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.8), 0 1px 1px rgba(255, 255, 255, 0.05);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.95), inset 0 1px 2px rgba(0, 0, 0, 0.9), 0 1px 1px rgba(255, 255, 255, 0.08);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
     touch-action: manipulation;
 }
 
 .cell:hover {
-    transform: scale(1.04);
+    transform: scale(1.03);
 }
 
 /* Hover preview disc */
@@ -320,44 +416,47 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 76%;
-    height: 76%;
+    width: 78%;
+    height: 78%;
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(255, 255, 255, 0.15);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 70%, transparent 100%);
     pointer-events: none;
 }
 
 .cell.col-hover {
-    box-shadow: inset 0 0 8px rgba(59, 130, 246, 0.4);
+    box-shadow: inset 0 0 10px rgba(59, 130, 246, 0.5), inset 0 4px 8px rgba(0, 0, 0, 0.95);
 }
 
-/* Piece Inner Styling */
+/* Piece Inner Styling - Molded Game Discs */
 .cell::after {
     content: '';
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 78%;
-    height: 78%;
+    width: 82%;
+    height: 82%;
     border-radius: 50%;
     transform: translate(-50%, -50%);
     opacity: 0;
-    transition: opacity 0.1s ease;
+    transition: opacity 0.12s ease;
+    box-sizing: border-box;
 }
 
-/* Player 1 Standard Piece */
+/* Player 1 Standard Piece - High Gloss Electric Cyan/Blue */
 .player-piece-1::after {
     opacity: 1;
-    background: radial-gradient(circle at 35% 35%, #60a5fa, #1d4ed8);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5), inset 0 2px 3px rgba(255, 255, 255, 0.6);
+    background: radial-gradient(circle at 35% 30%, #93c5fd 0%, #3b82f6 30%, #1d4ed8 70%, #1e3a8a 100%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7), inset 0 2px 4px rgba(255, 255, 255, 0.7), inset 0 -3px 4px rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.25);
 }
 
-/* Player 2 Standard Piece */
+/* Player 2 Standard Piece - High Gloss Sunburst Golden Yellow */
 .player-piece-2::after {
     opacity: 1;
-    background: radial-gradient(circle at 35% 35%, #fde047, #ca8a04);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5), inset 0 2px 3px rgba(255, 255, 255, 0.6);
+    background: radial-gradient(circle at 35% 30%, #fef08a 0%, #eab308 35%, #ca8a04 70%, #854d0e 100%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7), inset 0 2px 4px rgba(255, 255, 255, 0.8), inset 0 -3px 4px rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.25);
 }
 
 /* Obstacle / Rock Block Piece */
@@ -590,30 +689,65 @@ body {
 
 /* Tactical Puzzle Cards */
 .puzzle-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    border-radius: 1rem;
-    padding: 1.25rem;
-    transition: all 0.2s ease;
+    background: linear-gradient(145deg, rgba(24, 32, 54, 0.88) 0%, rgba(13, 19, 33, 0.95) 100%);
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1.15rem;
+    padding: 1.15rem;
+    cursor: pointer;
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .puzzle-card:hover {
-    border-color: var(--color-p1);
+    border-color: #38bdf8;
     transform: translateY(-3px);
+    box-shadow: 0 14px 28px -6px rgba(56, 189, 248, 0.25);
+}
+
+.puzzle-card:active {
+    transform: scale(0.98);
+}
+
+.puzzle-card.solved {
+    border-color: rgba(16, 185, 129, 0.5);
+    background: linear-gradient(145deg, rgba(16, 185, 129, 0.08) 0%, rgba(13, 19, 33, 0.92) 100%);
 }
 
 .puzzle-diff {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 800;
-    padding: 0.2rem 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.25rem 0.55rem;
     border-radius: 0.5rem;
 }
 
-.diff-easy { background: rgba(16, 185, 129, 0.2); color: #34d399; }
-.diff-medium { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
-.diff-hard { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
-.diff-expert { background: rgba(239, 68, 68, 0.2); color: #f87171; }
-.diff-grandmaster { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
+.diff-easy { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+.diff-medium { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); }
+.diff-hard { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+.diff-expert { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+.diff-grandmaster { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
+
+.btn-play-puzzle {
+    background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
+    box-shadow: 0 3px 0 #1e3a8a, 0 4px 8px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.6rem;
+    transition: all 0.12s ease;
+    cursor: pointer;
+}
+
+.btn-play-puzzle:hover {
+    filter: brightness(1.1);
+}
+
+.btn-play-puzzle:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #1e3a8a;
+}
 
 /* Shop / Armory Cards */
 .shop-card {
@@ -811,26 +945,47 @@ body {
 /* Mobile & Tablet Portrait Screens (under 768px) */
 @media (max-width: 767px) {
     #app-shell {
-        padding: 0.5rem 0.75rem calc(5.25rem + env(safe-area-inset-bottom, 0px)) 0.75rem;
+        padding: 0.4rem 0.6rem calc(5.25rem + env(safe-area-inset-bottom, 0px)) 0.6rem;
     }
 
     .top-header {
-        padding: 0.5rem 0.75rem;
-        margin-bottom: 0.85rem;
+        padding: 0.4rem 0.65rem;
+        margin-bottom: 0.75rem;
+        gap: 0.35rem;
+    }
+
+    .logo-container {
+        gap: 0.4rem;
+        flex-shrink: 0;
     }
 
     .logo-img {
-        width: 2.25rem;
-        height: 2.25rem;
+        width: 2.15rem;
+        height: 2.15rem;
+        border-radius: 0.6rem;
     }
 
     .header-title {
-        font-size: 1.2rem;
+        font-size: clamp(0.95rem, 3.8vw, 1.25rem);
+        white-space: nowrap;
+    }
+
+    .header-toolbar {
+        gap: 0.3rem;
+        flex-shrink: 0;
     }
 
     .currency-badge {
-        padding: 0.25rem 0.5rem;
-        font-size: 0.75rem;
+        padding: 0.25rem 0.45rem;
+        font-size: 0.72rem;
+        gap: 0.25rem;
+    }
+
+    .header-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.85rem;
+        border-radius: 0.6rem;
     }
 
     .game-layout-grid {
@@ -874,18 +1029,41 @@ body {
 
 /* Small Smartphone Screens (under 400px) */
 @media (max-width: 400px) {
+    .top-header {
+        padding: 0.35rem 0.45rem;
+        gap: 0.25rem;
+    }
+
+    .logo-container {
+        gap: 0.3rem;
+    }
+
     .header-title {
-        font-size: 1.05rem;
+        font-size: 0.95rem;
+        white-space: nowrap;
     }
 
     .logo-img {
-        width: 2rem;
-        height: 2rem;
+        width: 1.85rem;
+        height: 1.85rem;
+        border-radius: 0.5rem;
+    }
+
+    .header-toolbar {
+        gap: 0.25rem;
     }
 
     .currency-badge {
-        font-size: 0.7rem;
-        padding: 0.2rem 0.4rem;
+        font-size: 0.68rem;
+        padding: 0.2rem 0.35rem;
+        gap: 0.2rem;
+    }
+
+    .header-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 0.75rem;
+        border-radius: 0.5rem;
     }
 
     .game-board-wrapper {

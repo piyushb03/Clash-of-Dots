@@ -57,10 +57,10 @@ A modern, production-grade Connect Four strategy game featuring a multi-tiered M
 ```
 Clash-of-Dots/
 ├── index.html          # Semantic HTML5 shell with modern game HUD and overlays
-├── style.css           # Glassmorphism design system, 3D board, and animations
-├── script.js           # Master coordinator and backward-compatibility bridge
+├── style.css           # Glassmorphism design system, 3D tactile board, and animations
+├── script.js           # Master coordinator and initialization
 ├── js/
-│   ├── audio.js        # Web Audio API synthesizer + fallback audio manager
+│   ├── audio.js        # Pure Web Audio API procedural synthesizer (zero asset latency)
 │   ├── engine.js       # Core Connect Four logic, flexible grids, power-ups, gravity
 │   ├── ai.js           # Minimax + Alpha-Beta pruning, move ordering, hint engine
 │   ├── campaign.js     # 4 worlds, 24 levels, boss AI mechanics, star objectives
@@ -68,11 +68,7 @@ Clash-of-Dots/
 │   ├── state.js        # Persistent state manager, progression, shop, achievements
 │   ├── particles.js    # Canvas particle engine, drop shockwaves, confetti
 │   └── ui.js           # Screen navigation, modals, HUD controller, toasts
-├── turn.mp3            # Original turn sound effect
-├── winning.mp3         # Original victory sound effect
-├── losing.mp3          # Original defeat sound effect
-├── draw.mp3            # Original draw sound effect
-├── logo.png            # Original high-res logo
+├── logo.png            # High-res logo
 └── logo2.jpg           # Square logo icon
 ```
 

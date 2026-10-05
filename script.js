@@ -8,16 +8,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('🚀 Initializing Clash of Dots - World-Class Edition');
 
-    // Sync legacy audio elements with AudioEngine
-    if (window.audioEngine) {
-        window.audioEngine.audioElements = {
-            turn: document.getElementById('turn-sound'),
-            winning: document.getElementById('winning-sound'),
-            losing: document.getElementById('losing-sound'),
-            draw: document.getElementById('draw-sound')
-        };
-    }
-
     // Initialize State & UI
     if (window.stateManager) {
         window.stateManager.loadState();
