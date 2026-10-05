@@ -1,6 +1,6 @@
 /**
  * Clash of Dots - User Interface & Screen Flow Controller
- * Manages views (Menu, Game HUD, Campaign, Puzzles, Shop, Achievements, Stats),
+ * Manages views (Menu, Game HUD, Campaign, Shop, Achievements, Stats),
  * Modals (Settings, Pause, Victory, Defeat, Briefing, Rules),
  * Live Board Rendering, Drop animations, Timers, and Toast notifications.
  */
@@ -8,7 +8,7 @@
 class UIManager {
     constructor() {
         this.currentView = 'menu';
-        this.gameMode = 'classic'; // 'classic' | 'campaign' | 'puzzle' | 'pvp' | 'daily'
+        this.gameMode = 'classic'; // 'classic' | 'campaign' | 'pvp' | 'daily'
         this.currentLevel = null;
         this.currentPuzzle = null;
         this.currentTurn = 1; // 1 or 2
@@ -28,7 +28,6 @@ class UIManager {
             menu: document.getElementById('view-menu'),
             game: document.getElementById('view-game'),
             campaign: document.getElementById('view-campaign'),
-            puzzles: document.getElementById('view-puzzles'),
             shop: document.getElementById('view-shop'),
             achievements: document.getElementById('view-achievements'),
             stats: document.getElementById('view-stats')
@@ -74,27 +73,23 @@ class UIManager {
         });
 
         // Mode Select Cards
-        document.getElementById('card-mode-campaign')?.addEventListener('click', () => {
-            window.audioEngine.playClick();
-            this.switchView('campaign');
+        document.querySelectorAll('#card-mode-campaign, #btn-hero-campaign').forEach(el => {
+            el.addEventListener('click', () => {
+                window.audioEngine.playClick();
+                this.switchView('campaign');
+            });
         });
-        document.getElementById('card-mode-classic')?.addEventListener('click', () => {
-            window.audioEngine.playClick();
-            this.startClassicGame();
-        });
-        document.getElementById('card-mode-puzzles')?.addEventListener('click', () => {
-            window.audioEngine.playClick();
-            this.switchView('puzzles');
+        document.querySelectorAll('#card-mode-classic, #btn-hero-classic').forEach(el => {
+            el.addEventListener('click', () => {
+                window.audioEngine.playClick();
+                this.startClassicGame();
+            });
         });
         document.getElementById('card-mode-pvp')?.addEventListener('click', () => {
             window.audioEngine.playClick();
             this.startPvpGame();
         });
         document.getElementById('card-mode-daily')?.addEventListener('click', () => {
-            window.audioEngine.playClick();
-            this.startDailyChallenge();
-        });
-        document.getElementById('btn-banner-daily')?.addEventListener('click', () => {
             window.audioEngine.playClick();
             this.startDailyChallenge();
         });
@@ -269,7 +264,6 @@ class UIManager {
         this.updateHeaderStats();
 
         if (viewName === 'campaign') this.renderCampaignMap();
-        else if (viewName === 'puzzles') this.renderPuzzlesList();
         else if (viewName === 'shop') this.renderShop('discs');
         else if (viewName === 'achievements') this.renderAchievements();
         else if (viewName === 'stats') this.renderStatsDashboard();
@@ -391,30 +385,6 @@ class UIManager {
         this.switchView('game');
         this.startMatch(1);
         this.showToast(level.title, level.isBoss ? '⚠️' : '🚀');
-    }
-
-    startPuzzleGame(puzzle) {
-        this.gameMode = 'puzzle';
-        this.currentPuzzle = puzzle;
-        this.currentLevel = null;
-
-        this.initGameBoard(puzzle.rows, puzzle.cols);
-        this.engine.setBoardFromState(puzzle.board);
-
-        this.setupPlayerBadges('Operative', 'Tactical Board', window.stateManager.profile.avatar, '🧩');
-        this.setPowerupAvailability(puzzle.hasBomb ? ['bomb'] : puzzle.hasLaser ? ['laser'] : []);
-
-        this.currentTurn = 1;
-        this.movesCount = 0;
-        this.isGameOver = false;
-        this.isAiThinking = false;
-        this.updateHUD();
-        this.resetTurnTimer();
-
-        this.switchView('game');
-        this.renderBoard();
-        this.statusMsgEl.textContent = `${puzzle.title}: ${puzzle.description}`;
-        this.showToast(`${puzzle.title}: ${puzzle.difficulty}`, '🧠');
     }
 
     initGameBoard(rows, cols) {
@@ -610,7 +580,7 @@ class UIManager {
             this.handleGameWin(result.winLine, this.currentTurn);
         } else if (result.isDraw) {
             this.handleGameDraw();
-        } else if (this.gameMode === 'puzzle' || this.gameMode === 'daily') {
+        } else if (this.gameMode === 'daily') {
             this.checkPuzzleProgress(col, result);
             return;
         } else {
@@ -655,7 +625,7 @@ class UIManager {
         });
 
         this.renderBoard();
-        if (this.gameMode === 'puzzle' || this.gameMode === 'daily') {
+        if (this.gameMode === 'daily') {
             const puzzle = this.currentPuzzle;
             const winLine = (result && result.winLine) || this.engine.checkWin(1);
             const isSolution = (puzzle && puzzle.solutionMoves) ? puzzle.solutionMoves.includes(col) : false;
@@ -764,7 +734,7 @@ class UIManager {
             this.statusMsgEl.textContent = 'Tactical objective missed! Resetting...';
             this.showToast('Missed tactical target! Try again or use 💡 Hint.', '⚠️', 'warning');
             setTimeout(() => {
-                if (this.currentPuzzle && (this.gameMode === 'puzzle' || this.gameMode === 'daily')) {
+                if (this.currentPuzzle && this.gameMode === 'daily') {
                     this.restartCurrentGame();
                 }
             }, 1200);
@@ -805,10 +775,6 @@ class UIManager {
             earnedXP = 150 * stars;
             earnedGems = 5 * stars;
             window.stateManager.recordCampaignLevel(this.currentLevel.id, stars, this.movesCount);
-        } else if (this.gameMode === 'puzzle' && this.currentPuzzle && isPlayerWin) {
-            earnedCoins = this.currentPuzzle.rewardCoins;
-            earnedXP = this.currentPuzzle.rewardXP;
-            window.stateManager.recordPuzzleSolved(this.currentPuzzle.id, earnedCoins, earnedXP);
         } else if (this.gameMode === 'daily' && isPlayerWin) {
             const daily = window.challengeEngine.getDailyChallenge();
             earnedCoins = daily.rewardCoins;
@@ -891,8 +857,6 @@ class UIManager {
     restartCurrentGame() {
         if (this.gameMode === 'campaign' && this.currentLevel) {
             this.startCampaignLevel(this.currentLevel);
-        } else if (this.gameMode === 'puzzle' && this.currentPuzzle) {
-            this.startPuzzleGame(this.currentPuzzle);
         } else if (this.gameMode === 'daily') {
             this.startDailyChallenge();
         } else if (this.gameMode === 'pvp') {
@@ -919,7 +883,7 @@ class UIManager {
         if (this.isGameOver || this.isAiThinking) return;
 
         let bestCol;
-        if (this.currentPuzzle && (this.gameMode === 'puzzle' || this.gameMode === 'daily')) {
+        if (this.currentPuzzle && this.gameMode === 'daily') {
             bestCol = (this.currentPuzzle.solutionMoves && this.currentPuzzle.solutionMoves.length > 0)
                 ? this.currentPuzzle.solutionMoves[0]
                 : null;
@@ -1035,42 +999,6 @@ class UIManager {
         }
 
         this.openModal('briefing');
-    }
-
-    // --- PUZZLES VIEW RENDERING ---
-
-    renderPuzzlesList() {
-        const container = document.getElementById('puzzles-grid');
-        if (!container) return;
-
-        container.innerHTML = window.challengeEngine.puzzles.map(puz => {
-            const isSolved = (window.stateManager.completedPuzzles || []).includes(puz.id);
-            return `
-                <div class="puzzle-card ${isSolved ? 'solved' : ''}" data-puzzle-id="${puz.id}">
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="puzzle-diff diff-${puz.difficulty.toLowerCase()}">${puz.difficulty}</span>
-                        ${isSolved ? '<span class="text-green-400 font-bold text-sm">✓ SOLVED</span>' : ''}
-                    </div>
-                    <h4 class="font-bold text-white mb-1">${puz.title}</h4>
-                    <p class="text-xs text-gray-400 mb-3">${puz.description}</p>
-                    <div class="flex justify-between items-center text-xs text-yellow-400 font-semibold">
-                        <span>Reward: 🪙 ${puz.rewardCoins}</span>
-                        <button class="btn-play-puzzle px-3 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded font-bold">Solve</button>
-                    </div>
-                </div>
-            `;
-        }).join('');
-
-        container.querySelectorAll('.puzzle-card').forEach(card => {
-            card.addEventListener('click', () => {
-                const puzId = card.dataset.puzzleId;
-                const puzzle = window.challengeEngine.puzzles.find(p => p.id === puzId);
-                if (puzzle) {
-                    window.audioEngine.playClick();
-                    this.startPuzzleGame(puzzle);
-                }
-            });
-        });
     }
 
     // --- SHOP VIEW RENDERING ---
@@ -1190,8 +1118,12 @@ class UIManager {
         document.getElementById('stat-losses').textContent = lost;
         document.getElementById('stat-draws').textContent = drawn;
         document.getElementById('stat-streak').textContent = `${stats.winStreak} (Best: ${stats.maxWinStreak})`;
-        document.getElementById('stat-stars').textContent = `${window.stateManager.getTotalStars()} / 72`;
-        document.getElementById('stat-puzzles').textContent = (window.stateManager.completedPuzzles || []).length;
+        if (document.getElementById('stat-stars')) {
+            document.getElementById('stat-stars').textContent = `${window.stateManager.getTotalStars()} / 72`;
+        }
+        if (document.getElementById('stat-daily')) {
+            document.getElementById('stat-daily').textContent = (window.stateManager.dailyCompletedDates || []).length;
+        }
     }
 
     openSettingsModal() {

@@ -1,6 +1,6 @@
 # Clash of Dots — World-Class Connect Four with AI
 
-A modern, production-grade Connect Four strategy game featuring a multi-tiered Minimax AI with Alpha-Beta pruning, a 4-world campaign with boss battles, 12 tactical puzzles, dynamic daily challenges, power-ups, cosmetic customization, and zero-latency procedural Web Audio synthesis.
+A modern, production-grade Connect Four strategy game featuring a multi-tiered Minimax AI with Alpha-Beta pruning, a 4-world campaign with boss battles, dynamic daily challenges, power-ups, cosmetic customization, and zero-latency procedural Web Audio synthesis.
 
 <div align="center">
   <img src="logo2.jpg" alt="Clash of Dots Logo" width="120" style="border-radius: 20px; box-shadow: 0 0 20px rgba(59,130,246,0.6);" />
@@ -21,8 +21,6 @@ A modern, production-grade Connect Four strategy game featuring a multi-tiered M
 - **Classic Mode (vs AI)**:
   - Selectable difficulty: *Recruit (Easy)*, *Tactician (Normal)*, *Master (Hard)*, and *Grandmaster (Expert)*.
   - Configurable board dimensions: Compact 6x6, Classic Standard 7x6, and Expanded 8x7.
-- **Tactical Puzzles (12 Curated Scenarios)**:
-  - Solve tactical situations under turn pressure: *Instant Victory*, *Emergency Defense*, *The Double Fork*, *Zugzwang Bait*, *Bombardment*, and *Grandmaster Endgame*.
 - **Daily Challenge**:
   - Deterministic daily high-stakes puzzle rewarding 200 Coins and 50 Gems every single day.
 - **Pass & Play (Local 2-Player)**:
@@ -42,7 +40,7 @@ A modern, production-grade Connect Four strategy game featuring a multi-tiered M
 
 ### 🏆 Achievements & Analytics
 - **20 Unlockable Achievements** with automatic claim tracking and coin/gem rewards.
-- **Combat Analytics Dashboard** tracking total matches, win rate %, streaks, campaign stars, and puzzle completions.
+- **Combat Analytics Dashboard** tracking total matches, win rate %, streaks, campaign stars, and daily challenges.
 
 ### 🔊 Audio & Visual Polish
 - **Hybrid Audio Engine**: Zero-latency Web Audio API procedural sound synthesis for instant click, drop, explosion, and coin feedback.
@@ -64,7 +62,7 @@ Clash-of-Dots/
 │   ├── engine.js       # Core Connect Four logic, flexible grids, power-ups, gravity
 │   ├── ai.js           # Minimax + Alpha-Beta pruning, move ordering, hint engine
 │   ├── campaign.js     # 4 worlds, 24 levels, boss AI mechanics, star objectives
-│   ├── challenges.js   # 12 tactical puzzles & deterministic daily challenges
+│   ├── challenges.js   # Deterministic daily challenges and tactical engine
 │   ├── state.js        # Persistent state manager, progression, shop, achievements
 │   ├── particles.js    # Canvas particle engine, drop shockwaves, confetti
 │   └── ui.js           # Screen navigation, modals, HUD controller, toasts

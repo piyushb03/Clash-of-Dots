@@ -709,68 +709,6 @@ body {
     color: #fbbf24;
 }
 
-/* Tactical Puzzle Cards */
-.puzzle-card {
-    background: linear-gradient(145deg, rgba(24, 32, 54, 0.88) 0%, rgba(13, 19, 33, 0.95) 100%);
-    border: 1.5px solid rgba(255, 255, 255, 0.1);
-    border-radius: 1.15rem;
-    padding: 1.15rem;
-    cursor: pointer;
-    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.puzzle-card:hover {
-    border-color: #38bdf8;
-    transform: translateY(-3px);
-    box-shadow: 0 14px 28px -6px rgba(56, 189, 248, 0.25);
-}
-
-.puzzle-card:active {
-    transform: scale(0.98);
-}
-
-.puzzle-card.solved {
-    border-color: rgba(16, 185, 129, 0.5);
-    background: linear-gradient(145deg, rgba(16, 185, 129, 0.08) 0%, rgba(13, 19, 33, 0.92) 100%);
-}
-
-.puzzle-diff {
-    font-size: 0.72rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    padding: 0.25rem 0.55rem;
-    border-radius: 0.5rem;
-}
-
-.diff-easy { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
-.diff-medium { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); }
-.diff-hard { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
-.diff-expert { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
-.diff-grandmaster { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
-
-.btn-play-puzzle {
-    background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
-    box-shadow: 0 3px 0 #1e3a8a, 0 4px 8px rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 0.6rem;
-    transition: all 0.12s ease;
-    cursor: pointer;
-}
-
-.btn-play-puzzle:hover {
-    filter: brightness(1.1);
-}
-
-.btn-play-puzzle:active {
-    transform: translateY(2px);
-    box-shadow: 0 1px 0 #1e3a8a;
-}
-
 /* Shop / Armory Cards */
 .shop-card {
     background: var(--bg-card);

@@ -1,7 +1,6 @@
 /**
- * Clash of Dots - Tactical Puzzles & Daily Challenge Engine
- * 12 Curated Tactical Scenarios, Daily Challenge Generator,
- * and Blitz Mode configuration.
+ * Clash of Dots - Daily Challenge Protocol Engine
+ * Deterministic daily scenario generator and tactical board templates.
  */
 
 const TACTICAL_PUZZLES = [

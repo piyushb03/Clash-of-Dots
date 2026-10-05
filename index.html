@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Clash of Dots — World-Class Connect Four with AI</title>
-    <meta name="description" content="Play Clash of Dots, the definitive Connect Four game featuring an intelligent Minimax AI, 4-world campaign, boss battles, tactical puzzles, power-ups, and custom armory skins.">
+    <meta name="description" content="Play Clash of Dots, the definitive Connect Four game featuring an intelligent Minimax AI, 4-world campaign, boss battles, daily challenges, power-ups, and custom armory skins.">
     <link rel="icon" type="image/jpeg" href="logo2.jpg">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -72,10 +72,10 @@
                         Experience classic Connect Four reinvented with a Minimax intelligent AI, multi-world campaign, boss mechanics, tactical power-ups, and customizable armory skins.
                     </p>
                     <div class="flex flex-wrap gap-3">
-                        <button id="card-mode-classic" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold rounded-xl shadow-lg transition flex items-center gap-2">
+                        <button id="btn-hero-classic" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold rounded-xl shadow-lg transition flex items-center gap-2">
                             <span>⚡</span> Quick Match vs AI
                         </button>
-                        <button id="card-mode-campaign" class="px-6 py-3 bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-700 font-bold rounded-xl shadow transition flex items-center gap-2">
+                        <button id="btn-hero-campaign" class="px-6 py-3 bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-700 font-bold rounded-xl shadow transition flex items-center gap-2">
                             <span>🗺️</span> Campaign Adventure
                         </button>
                     </div>
@@ -84,20 +84,20 @@
 
             <!-- Game Modes Cards Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                <!-- Classic Mode Card -->
+                <div class="mode-card" id="card-mode-classic">
+                    <div class="mode-icon text-cyan-400">⚡</div>
+                    <h3 class="text-lg font-bold text-white mb-1">Classic Match vs AI</h3>
+                    <p class="text-xs text-gray-400 mb-3">Instant duel against our Minimax AI with 4 tactical difficulty levels and custom board sizes.</p>
+                    <span class="text-xs font-semibold text-cyan-400">Instant AI Duel →</span>
+                </div>
+
                 <!-- Campaign Mode Card -->
                 <div class="mode-card" id="card-mode-campaign" data-nav="campaign">
                     <div class="mode-icon text-blue-400">🗺️</div>
                     <h3 class="text-lg font-bold text-white mb-1">Campaign Mode</h3>
                     <p class="text-xs text-gray-400 mb-3">4 Thematic Worlds, 24 Levels, and Epic Boss Battles with special rules & hazards.</p>
                     <span class="text-xs font-semibold text-blue-400">24 Stages • 3-Star Objectives →</span>
-                </div>
-
-                <!-- Tactical Puzzles Card -->
-                <div class="mode-card" id="card-mode-puzzles" data-nav="puzzles">
-                    <div class="mode-icon text-purple-400">🧠</div>
-                    <h3 class="text-lg font-bold text-white mb-1">Tactical Puzzles</h3>
-                    <p class="text-xs text-gray-400 mb-3">Test your IQ across 12 hand-crafted puzzle scenarios: Mate in 1, Mate in 2, Obstacles, and Baits.</p>
-                    <span class="text-xs font-semibold text-purple-400">12 Scenarios • Big Coin Rewards →</span>
                 </div>
 
                 <!-- Daily Challenge Card -->
@@ -231,41 +231,6 @@
             </div>
         </main>
 
-        <!-- VIEW: TACTICAL PUZZLES -->
-        <main id="view-puzzles" class="view-container hidden">
-            <div class="flex justify-between items-center mb-6">
-                <div>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white font-heading">Tactical Puzzles</h2>
-                    <p class="text-xs sm:text-sm text-gray-400">Solve critical situations in limited turns. Earn treasury coins and prestige.</p>
-                </div>
-                <button class="px-4 py-2 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-lg text-xs font-bold text-gray-300" data-nav="menu">
-                    ← Main Menu
-                </button>
-            </div>
-
-            <!-- Daily Protocol Quick Launcher Banner -->
-            <div id="btn-banner-daily" class="glass-panel p-4 mb-5 border-l-4 border-yellow-400 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 cursor-pointer hover:border-yellow-300 transition group">
-                <div class="flex items-center gap-3">
-                    <span class="text-3xl group-hover:scale-110 transition">📅</span>
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h3 class="text-sm sm:text-base font-bold text-white">Today's Daily Challenge Protocol</h3>
-                            <span class="text-xs font-extrabold px-2 py-0.5 bg-yellow-500/20 text-yellow-400 border border-yellow-500/40 rounded-full">SPECIAL BOUNTY</span>
-                        </div>
-                        <p class="text-xs text-gray-300 mt-0.5">Solve today's tactical scenario to claim <strong class="text-yellow-400">🪙 200 Coins</strong> + <strong class="text-cyan-400">💎 50 Gems</strong>!</p>
-                    </div>
-                </div>
-                <button class="px-4 py-2 bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-gray-950 font-extrabold text-xs rounded-xl shadow-md transition self-stretch sm:self-auto text-center">
-                    Launch Daily →
-                </button>
-            </div>
-
-            <!-- Puzzles Grid -->
-            <div id="puzzles-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <!-- Generated dynamically by UIManager -->
-            </div>
-        </main>
-
         <!-- VIEW: ARMORY & SHOP -->
         <main id="view-shop" class="view-container hidden">
             <div class="flex justify-between items-center mb-6">
@@ -356,8 +321,8 @@
                     <div id="stat-stars" class="text-xl font-bold text-amber-400">0 / 72</div>
                 </div>
                 <div class="glass-panel p-4 text-center">
-                    <div class="text-gray-400 text-xs font-semibold mb-1">Puzzles Solved</div>
-                    <div id="stat-puzzles" class="text-xl font-bold text-purple-400">0 / 12</div>
+                    <div class="text-gray-400 text-xs font-semibold mb-1">Daily Solved</div>
+                    <div id="stat-daily" class="text-xl font-bold text-yellow-400">0</div>
                 </div>
             </div>
         </main>
@@ -384,10 +349,6 @@
             <button class="nav-item-btn" data-nav="campaign">
                 <span>🗺️</span>
                 <span>Campaign</span>
-            </button>
-            <button class="nav-item-btn" data-nav="puzzles">
-                <span>🧠</span>
-                <span>Puzzles</span>
             </button>
             <button class="nav-item-btn" data-nav="shop">
                 <span>🎨</span>
